@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Pages & Reveal.js — Soufiane Soulami</title>
+
+  <!-- Reveal.js CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <!-- NON-DEFAULT THEME: "Moon" (dark slate blue — not the default "black" or "white") -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/moon.css" id="theme" />
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css" />
+
+  <style>
+    /* ── Custom overrides on top of Moon theme ── */
+    :root {
+      --r-background-color: #1a1f2e;
+      --r-main-color: #e8e8e8;
+      --r-heading-color: #7ec8e3;
+      --r-link-color: #7ec8e3;
+      --r-selection-background-color: #7ec8e3;
+      --r-heading-font: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    }
+
+    .reveal .slides section {
+      text-align: left;
+    }
+
+    /* Title slide — centre it */
+    .reveal .slides section.title-slide {
+      text-align: center;
+    }
+
+    .reveal h1 { font-size: 2.0em; color: #7ec8e3; }
+    .reveal h2 { font-size: 1.4em; color: #a8d8ea; border-bottom: 2px solid #7ec8e340; padding-bottom: 0.2em; }
+    .reveal h3 { font-size: 1.05em; color: #7ec8e3; margin-top: 0.6em; }
+
+    /* Pill badge */
+    .badge {
+      display: inline-block;
+      background: #7ec8e322;
+      border: 1px solid #7ec8e3aa;
+      color: #7ec8e3;
+      border-radius: 20px;
+      padding: 2px 14px;
+      font-size: 0.45em;
+      vertical-align: middle;
+      margin-left: 10px;
+      letter-spacing: 0.06em;
+    }
+
+    /* Two-column helper */
+    .cols { display: flex; gap: 2em; align-items: flex-start; }
+    .col  { flex: 1; }
+
+    /* Highlight box */
+    .callout {
+      background: #7ec8e312;
+      border-left: 4px solid #7ec8e3;
+      border-radius: 0 8px 8px 0;
+      padding: 0.5em 0.9em;
+      font-size: 0.75em;
+      margin: 0.5em 0;
+    }
+
+    .callout.warn {
+      border-left-color: #f0a500;
+      background: #f0a50012;
+    }
+
+    .callout.success {
+      border-left-color: #4caf7d;
+      background: #4caf7d12;
+    }
+
+    /* Step numbering */
+    .step {
+      display: flex;
+      gap: 0.8em;
+      align-items: flex-start;
+      margin-bottom: 0.55em;
+      font-size: 0.72em;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 1.7em;
+      height: 1.7em;
+      background: #7ec8e3;
+      color: #1a1f2e;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1em;
+    }
+    .step-body { flex: 1; padding-top: 0.15em; }
+
+    /* Code pill */
+    code {
+      background: #ffffff18;
+      border-radius: 4px;
+      padding: 1px 7px;
+      font-size: 0.88em;
+      color: #f8c77e;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+    }
+
+    /* Image frame */
+    .img-frame {
+      border: 2px solid #7ec8e355;
+      border-radius: 10px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+
+    /* Nav hint */
+    .nav-hint {
+      position: fixed;
+      bottom: 14px;
+      right: 14px;
+      font-size: 0.38em;
+      color: #7ec8e388;
+      text-align: right;
+      line-height: 1.6;
+      pointer-events: none;
+    }
+
+    /* Source list */
+    .sources li {
+      font-size: 0.55em;
+      margin-bottom: 0.4em;
+      color: #aac;
+    }
+    .sources a { color: #7ec8e3; }
+
+    /* Fragment fade-up by default */
+    .reveal .fragment { transition: all 0.4s ease; }
+
+    /* Vertical sub-slide label */
+    .vert-label {
+      position: absolute;
+      top: 0; right: 0;
+      background: #7ec8e322;
+      border: 1px solid #7ec8e355;
+      border-radius: 0 0 0 8px;
+      padding: 2px 10px;
+      font-size: 0.38em;
+      color: #7ec8e3aa;
+      letter-spacing: 0.08em;
+    }
+  </style>
+</head>
+
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 1  ·  TITLE  (horizontal →)
+════════════════════════════════════════════════ -->
+<section class="title-slide" data-background-gradient="radial-gradient(ellipse at 30% 40%, #1e3a5f 0%, #1a1f2e 60%)">
+  <br><br>
+  <h1>GitHub Pages<br>&amp; Reveal.js</h1>
+  <p style="color:#a8d8ea; font-size:0.75em; margin-top:0.6em;">
+    Building and Publishing Static Presentations on the Web
+  </p>
+  <hr style="border-color:#7ec8e340; margin: 1.2em auto; width:40%">
+  <p style="font-size:0.5em; color:#7ec8e388;">
+    Soufiane Soulami &nbsp;·&nbsp; 78134 &nbsp;·&nbsp; 56DPH<br>
+    Assignment 2 &nbsp;·&nbsp; 2025
+  </p>
+  <br>
+  <p style="font-size:0.42em; color:#7ec8e355;">
+    ← → navigate horizontally &nbsp;·&nbsp; ↓ navigate vertically within sections
+  </p>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 2  ·  WHAT IS GITHUB PAGES  (horizontal →)
+     with 2 vertical sub-slides ↓
+════════════════════════════════════════════════ -->
+<section>
+
+  <!-- 2.1 — Overview -->
+  <section data-background-color="#1a1f2e">
+    <div class="vert-label">2 / A</div>
+    <h2>What is GitHub Pages? <span class="badge">OVERVIEW</span></h2>
+    <div class="cols">
+      <div class="col">
+        <div class="callout">
+          <strong>GitHub Pages</strong> is a free static-site hosting service built directly into GitHub.
+          Push files to a repository → your site goes live automatically.
+        </div>
+        <br>
+        <div class="step"><div class="step-num">1</div><div class="step-body">Create a repo named <code>username.github.io</code></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body">Enable Pages in <em>Settings → Pages</em></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body">Push your HTML / Markdown files</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body">Site is live at <code>https://username.github.io</code></div></div>
+      </div>
+      <div class="col" style="font-size:0.68em; color:#a8d8ea;">
+        <p><strong>Key facts</strong></p>
+        <ul style="line-height:2;">
+          <li>100 % free for public repos</li>
+          <li>Supports <strong>Jekyll</strong> natively</li>
+          <li>Custom domains supported</li>
+          <li>HTTPS automatically enabled</li>
+          <li>Builds triggered on every <code>git push</code></li>
+        </ul>
+      </div>
+    </div>
+    <p style="font-size:0.4em; color:#7ec8e355; margin-top:1em;">↓ scroll down for Jekyll details</p>
+  </section>
+
+  <!-- 2.2 — Jekyll -->
+  <section data-background-color="#1a1f2e">
+    <div class="vert-label">2 / B</div>
+    <h2>Jekyll — the Engine Behind It <span class="badge">STATIC SITE GENERATOR</span></h2>
+
+    <!-- Diagram: Markdown → Jekyll → HTML -->
+    <div style="display:flex; align-items:center; justify-content:center; gap:1em; margin:0.8em 0; font-size:0.7em;">
+      <div style="text-align:center; background:#7ec8e322; border:1px solid #7ec8e355; border-radius:8px; padding:0.5em 1em;">
+        📝<br><code>index.md</code><br><span style="color:#aac; font-size:0.8em;">Markdown</span>
+      </div>
+      <div style="color:#7ec8e3; font-size:1.5em;">→</div>
+      <div style="text-align:center; background:#f0a50022; border:1px solid #f0a500aa; border-radius:8px; padding:0.5em 1em;">
+        ⚙️<br><code>Jekyll</code><br><span style="color:#aac; font-size:0.8em;">Builder</span>
+      </div>
+      <div style="color:#7ec8e3; font-size:1.5em;">→</div>
+      <div style="text-align:center; background:#4caf7d22; border:1px solid #4caf7daa; border-radius:8px; padding:0.5em 1em;">
+        🌐<br><code>index.html</code><br><span style="color:#aac; font-size:0.8em;">Live Site</span>
+      </div>
+    </div>
+
+    <div class="cols" style="margin-top:0.6em;">
+      <div class="col">
+        <p style="font-size:0.65em; font-weight:600; color:#a8d8ea;">_config.yml example</p>
+        <pre><code class="language-yaml" style="font-size:0.55em;">title: My Assignment Website
+theme: minima
+description: GitHub Pages site
+author: Soufiane Soulami
+</code></pre>
+      </div>
+      <div class="col">
+        <p style="font-size:0.65em; font-weight:600; color:#a8d8ea;">Page front matter</p>
+        <pre><code class="language-yaml" style="font-size:0.55em;">---
+layout: default
+title: About Me
+---
+## Hello!
+This is my **about** page.
+</code></pre>
+      </div>
+    </div>
+
+    <div class="callout success" style="margin-top:0.6em;">
+      Your existing site at <strong>soufiane01234.github.io</strong> already uses this workflow — 5 pages, Jekyll + Minima theme ✓
+    </div>
+  </section>
+
+</section><!-- end section 2 -->
+
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 3  ·  REVEAL.JS  (horizontal →)
+     with 3 vertical sub-slides ↓
+════════════════════════════════════════════════ -->
+<section>
+
+  <!-- 3.1 — What is Reveal.js -->
+  <section data-background-color="#1a1f2e">
+    <div class="vert-label">3 / A</div>
+    <h2>What is Reveal.js? <span class="badge">FRAMEWORK</span></h2>
+    <div class="callout">
+      <strong>Reveal.js</strong> is an open-source HTML presentation framework.
+      Slides are just <code>&lt;section&gt;</code> elements — no PowerPoint needed.
+    </div>
+    <br>
+    <div class="cols">
+      <div class="col" style="font-size:0.7em;">
+        <h3>✦ Key features</h3>
+        <ul style="line-height:2.1;">
+          <li><strong>Horizontal &amp; vertical</strong> navigation</li>
+          <li>Built-in <strong>Markdown</strong> support</li>
+          <li>Multiple <strong>themes</strong> (moon, sky, serif, solarized…)</li>
+          <li><strong>Code highlighting</strong> via highlight.js</li>
+          <li>Speaker notes, PDF export</li>
+          <li>Hosted on any static server — including <strong>GitHub Pages</strong></li>
+        </ul>
+      </div>
+      <div class="col" style="font-size:0.7em;">
+        <h3>✦ Minimum HTML</h3>
+        <pre><code class="language-html" style="font-size:0.75em;">&lt;div class="reveal"&gt;
+  &lt;div class="slides"&gt;
+
+    &lt;section&gt;Slide 1&lt;/section&gt;
+
+    &lt;section&gt;
+      &lt;section&gt;Slide 2A&lt;/section&gt;
+      &lt;section&gt;Slide 2B ↓&lt;/section&gt;
+    &lt;/section&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </div>
+    <p style="font-size:0.4em; color:#7ec8e355; margin-top:0.6em;">↓ themes &amp; markdown below</p>
+  </section>
+
+  <!-- 3.2 — Themes -->
+  <section data-background-color="#1a1f2e">
+    <div class="vert-label">3 / B</div>
+    <h2>Built-in Themes <span class="badge">STYLING</span></h2>
+    <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:0.6em; font-size:0.6em; margin-top:0.6em;">
+      <div style="background:#151515; border:1px solid #555; border-radius:8px; padding:0.6em; text-align:center;">
+        <div style="font-weight:700; color:#fff; font-size:1.1em;">black</div>
+        <div style="color:#666; font-size:0.8em;">default dark</div>
+      </div>
+      <div style="background:#fff; border:2px solid #ddd; border-radius:8px; padding:0.6em; text-align:center;">
+        <div style="font-weight:700; color:#333; font-size:1.1em;">white</div>
+        <div style="color:#999; font-size:0.8em;">clean light</div>
+      </div>
+      <div style="background:#1a1f2e; border:2px solid #7ec8e3; border-radius:8px; padding:0.6em; text-align:center;">
+        <div style="font-weight:700; color:#7ec8e3; font-size:1.1em;">moon ★</div>
+        <div style="color:#a8d8ea; font-size:0.8em;">this deck</div>
+      </div>
+      <div style="background:#fdf6e3; border:1px solid #d9c89e; border-radius:8px; padding:0.6em; text-align:center;">
+        <div style="font-weight:700; color:#657b83; font-size:1.1em;">solarized</div>
+        <div style="color:#93a1a1; font-size:0.8em;">warm tones</div>
+      </div>
+      <div style="background:#2e3192; border:1px solid #5555cc; border-radius:8px; padding:0.6em; text-align:center;">
+        <div style="font-weight:700; color:#eee; font-size:1.1em;">sky</div>
+        <div style="color:#aac; font-size:0.8em;">cool blue</div>
+      </div>
+      <div style="background:#f0f1eb; border:1px solid #ccc; border-radius:8px; padding:0.6em; text-align:center;">
+        <div style="font-weight:700; color:#4c4c4c; font-family:Georgia,serif; font-size:1.1em;">serif</div>
+        <div style="color:#888; font-size:0.8em;">academic</div>
+      </div>
+      <div style="background:#f6f6f0; border:1px solid #c8c8c0; border-radius:8px; padding:0.6em; text-align:center;">
+        <div style="font-weight:700; color:#2c3e50; font-size:1.1em;">simple</div>
+        <div style="color:#aaa; font-size:0.8em;">minimal</div>
+      </div>
+      <div style="background:#222; border:1px solid #444; border-radius:8px; padding:0.6em; text-align:center;">
+        <div style="font-weight:700; color:#ddd; font-size:1.1em;">night</div>
+        <div style="color:#888; font-size:0.8em;">deep dark</div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:0.8em;">
+      Switch theme with one line: <code>&lt;link rel="stylesheet" href="dist/theme/<strong>moon</strong>.css"&gt;</code>
+    </div>
+  </section>
+
+  <!-- 3.3 — Markdown in Reveal -->
+  <section data-background-color="#1a1f2e">
+    <div class="vert-label">3 / C</div>
+    <h2>Markdown Inside Reveal.js <span class="badge">CONTENT</span></h2>
+    <div class="cols">
+      <div class="col">
+        <p style="font-size:0.65em; color:#a8d8ea; font-weight:600;">Write this in your HTML…</p>
+        <pre><code class="language-html" style="font-size:0.6em;">&lt;section
+  data-markdown
+  data-separator="^\n---\n"
+  data-separator-vertical="^\n--\n"&gt;
+&lt;textarea data-template&gt;
+## Slide Title
+
+- Bullet one
+- **Bold** and *italic*
+- `inline code`
+
+---
+
+## Next Slide
+Image below 👇
+
+![alt](https://picsum.photos/400/200)
+&lt;/textarea&gt;
+&lt;/section&gt;</code></pre>
+      </div>
+      <div class="col" style="font-size:0.7em;">
+        <p style="color:#a8d8ea; font-weight:600;">…and Reveal renders:</p>
+        <div style="background:#ffffff0d; border:1px solid #7ec8e355; border-radius:8px; padding:0.8em; line-height:1.9;">
+          <strong style="color:#7ec8e3; font-size:1.05em;">Slide Title</strong><br>
+          • Bullet one<br>
+          • <strong>Bold</strong> and <em>italic</em><br>
+          • <code>inline code</code><br><br>
+          <span style="color:#aac; font-size:0.8em;">[ horizontal separator: --- ]</span><br><br>
+          <strong style="color:#7ec8e3;">Next Slide</strong><br>
+          <span style="color:#aac; font-size:0.8em;">[ image renders inline ]</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</section><!-- end section 3 -->
+
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 4  ·  QUARTO + REVEALJS  (horizontal →)
+     with 2 vertical sub-slides ↓
+════════════════════════════════════════════════ -->
+<section>
+
+  <!-- 4.1 — What is Quarto -->
+  <section data-background-color="#1a1f2e">
+    <div class="vert-label">4 / A</div>
+    <h2>Quarto Presentations <span class="badge">ALTERNATIVE WORKFLOW</span></h2>
+    <div class="callout">
+      <strong>Quarto</strong> is a next-generation publishing system. Write in <code>.qmd</code> (Markdown + code),
+      and Quarto compiles to a Reveal.js HTML presentation automatically.
+    </div>
+    <br>
+    <div class="cols">
+      <div class="col" style="font-size:0.68em;">
+        <h3>Minimal .qmd file</h3>
+        <pre><code class="language-yaml" style="font-size:0.8em;">---
+title: "My Presentation"
+author: Soufiane Soulami
+format:
+  revealjs:
+    theme: moon
+    slide-number: true
+    transition: slide
+---
+
+## Slide 1
+
+Content here...
+
+## Slide 2
+
+More content...
+</code></pre>
+      </div>
+      <div class="col" style="font-size:0.68em;">
+        <h3>Render &amp; publish</h3>
+        <div class="step"><div class="step-num">1</div><div class="step-body">Install Quarto from <code>quarto.org</code></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body">Write your <code>.qmd</code> file</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body">Run <code>quarto render slides.qmd</code></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body">Output: <code>slides.html</code> → push to GitHub</div></div>
+        <div class="callout success" style="margin-top:0.6em;">
+          Quarto handles all Reveal.js boilerplate for you.
+        </div>
+      </div>
+    </div>
+    <p style="font-size:0.4em; color:#7ec8e355; margin-top:0.6em;">↓ comparison below</p>
+  </section>
+
+  <!-- 4.2 — Comparison table -->
+  <section data-background-color="#1a1f2e">
+    <div class="vert-label">4 / B</div>
+    <h2>Raw Reveal.js vs Quarto <span class="badge">COMPARISON</span></h2>
+    <table style="width:100%; font-size:0.62em; border-collapse:collapse; margin-top:0.5em;">
+      <thead>
+        <tr style="background:#7ec8e322; color:#7ec8e3;">
+          <th style="padding:0.5em 0.8em; text-align:left; border-bottom:1px solid #7ec8e355;">Feature</th>
+          <th style="padding:0.5em 0.8em; text-align:center; border-bottom:1px solid #7ec8e355;">Raw Reveal.js</th>
+          <th style="padding:0.5em 0.8em; text-align:center; border-bottom:1px solid #7ec8e355;">Quarto + Reveal.js</th>
+        </tr>
+      </thead>
+      <tbody style="color:#ccd;">
+        <tr><td style="padding:0.45em 0.8em; border-bottom:1px solid #ffffff10;">Setup</td><td style="text-align:center; border-bottom:1px solid #ffffff10;">Copy CDN links</td><td style="text-align:center; border-bottom:1px solid #ffffff10;">Install Quarto CLI</td></tr>
+        <tr style="background:#ffffff05;"><td style="padding:0.45em 0.8em; border-bottom:1px solid #ffffff10;">Write slides in</td><td style="text-align:center; border-bottom:1px solid #ffffff10;">HTML</td><td style="text-align:center; border-bottom:1px solid #ffffff10;">Markdown (.qmd)</td></tr>
+        <tr><td style="padding:0.45em 0.8em; border-bottom:1px solid #ffffff10;">Run code in slides</td><td style="text-align:center; border-bottom:1px solid #ffffff10;">❌</td><td style="text-align:center; border-bottom:1px solid #ffffff10;">✅ R, Python, Julia</td></tr>
+        <tr style="background:#ffffff05;"><td style="padding:0.45em 0.8em; border-bottom:1px solid #ffffff10;">Learning curve</td><td style="text-align:center; border-bottom:1px solid #ffffff10;">Medium (HTML)</td><td style="text-align:center; border-bottom:1px solid #ffffff10;">Low (Markdown)</td></tr>
+        <tr><td style="padding:0.45em 0.8em; border-bottom:1px solid #ffffff10;">GitHub Pages deploy</td><td style="text-align:center; border-bottom:1px solid #ffffff10;">✅ Direct</td><td style="text-align:center; border-bottom:1px solid #ffffff10;">✅ After render</td></tr>
+        <tr style="background:#ffffff05;"><td style="padding:0.45em 0.8em;">Best for</td><td style="text-align:center;">Full HTML control</td><td style="text-align:center;">Data / reproducible science</td></tr>
+      </tbody>
+    </table>
+    <div class="callout warn" style="margin-top:0.7em;">
+      For this assignment we use <strong>raw Reveal.js</strong> — one self-contained HTML file,
+      zero build tools, works immediately on GitHub Pages.
+    </div>
+  </section>
+
+</section><!-- end section 4 -->
+
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 5  ·  DEPLOYING TO GITHUB PAGES  (horizontal →)
+     with 2 vertical sub-slides ↓
+════════════════════════════════════════════════ -->
+<section>
+
+  <!-- 5.1 — Step-by-step deploy -->
+  <section data-background-color="#1a1f2e">
+    <div class="vert-label">5 / A</div>
+    <h2>Deploying to GitHub Pages <span class="badge">STEP-BY-STEP</span></h2>
+
+    <div class="step fragment fade-up"><div class="step-num">1</div><div class="step-body">Go to your repo: <code>github.com/soufiane01234/soufiane01234.github.io</code></div></div>
+    <div class="step fragment fade-up"><div class="step-num">2</div><div class="step-body">Click <strong>Add file → Create new file</strong>. Name it <code>presentation.html</code></div></div>
+    <div class="step fragment fade-up"><div class="step-num">3</div><div class="step-body">Paste the entire HTML file content (provided separately)</div></div>
+    <div class="step fragment fade-up"><div class="step-num">4</div><div class="step-body">Scroll down → <strong>Commit changes</strong> (green button)</div></div>
+    <div class="step fragment fade-up"><div class="step-num">5</div><div class="step-body">Wait ~60 seconds → visit <code>soufiane01234.github.io/presentation.html</code></div></div>
+    <div class="step fragment fade-up"><div class="step-num">6</div><div class="step-body">Use ← → arrow keys to navigate and ↓ for vertical slides</div></div>
+
+    <div class="callout success fragment fade-up" style="margin-top:0.6em;">
+      No build step needed — GitHub serves the HTML directly. ✓
+    </div>
+    <p style="font-size:0.4em; color:#7ec8e355; margin-top:0.6em;">↓ navigation guide below</p>
+  </section>
+
+  <!-- 5.2 — Navigation map -->
+  <section data-background-color="#1a1f2e">
+    <div class="vert-label">5 / B</div>
+    <h2>Presentation Navigation Map <span class="badge">STRUCTURE</span></h2>
+    <!-- Visual slide map -->
+    <div style="font-size:0.58em; overflow-x:auto;">
+      <div style="display:flex; gap:0.6em; align-items:flex-start; justify-content:center; margin-top:0.5em;">
+
+        <div style="text-align:center;">
+          <div style="background:#7ec8e333; border:1px solid #7ec8e3; border-radius:6px; padding:0.4em 0.7em; white-space:nowrap;">🏠 Title</div>
+        </div>
+        <div style="color:#7ec8e3; font-size:1.4em; padding-top:0.15em;">→</div>
+        <div style="text-align:center;">
+          <div style="background:#7ec8e322; border:1px solid #7ec8e388; border-radius:6px; padding:0.4em 0.7em; white-space:nowrap;">2A GitHub Pages</div>
+          <div style="color:#7ec8e355; font-size:0.9em; margin:2px 0;">↓</div>
+          <div style="background:#7ec8e311; border:1px solid #7ec8e355; border-radius:6px; padding:0.4em 0.7em; white-space:nowrap;">2B Jekyll</div>
+        </div>
+        <div style="color:#7ec8e3; font-size:1.4em; padding-top:0.15em;">→</div>
+        <div style="text-align:center;">
+          <div style="background:#7ec8e322; border:1px solid #7ec8e388; border-radius:6px; padding:0.4em 0.7em; white-space:nowrap;">3A Reveal.js</div>
+          <div style="color:#7ec8e355; font-size:0.9em; margin:2px 0;">↓</div>
+          <div style="background:#7ec8e311; border:1px solid #7ec8e355; border-radius:6px; padding:0.4em 0.7em; white-space:nowrap;">3B Themes</div>
+          <div style="color:#7ec8e355; font-size:0.9em; margin:2px 0;">↓</div>
+          <div style="background:#7ec8e311; border:1px solid #7ec8e355; border-radius:6px; padding:0.4em 0.7em; white-space:nowrap;">3C Markdown</div>
+        </div>
+        <div style="color:#7ec8e3; font-size:1.4em; padding-top:0.15em;">→</div>
+        <div style="text-align:center;">
+          <div style="background:#7ec8e322; border:1px solid #7ec8e388; border-radius:6px; padding:0.4em 0.7em; white-space:nowrap;">4A Quarto</div>
+          <div style="color:#7ec8e355; font-size:0.9em; margin:2px 0;">↓</div>
+          <div style="background:#7ec8e311; border:1px solid #7ec8e355; border-radius:6px; padding:0.4em 0.7em; white-space:nowrap;">4B Compare</div>
+        </div>
+        <div style="color:#7ec8e3; font-size:1.4em; padding-top:0.15em;">→</div>
+        <div style="text-align:center;">
+          <div style="background:#7ec8e322; border:1px solid #7ec8e388; border-radius:6px; padding:0.4em 0.7em; white-space:nowrap;">5A Deploy</div>
+          <div style="color:#7ec8e355; font-size:0.9em; margin:2px 0;">↓</div>
+          <div style="background:#7ec8e333; border:2px solid #7ec8e3; border-radius:6px; padding:0.4em 0.7em; white-space:nowrap;">5B Map ← you are here</div>
+        </div>
+        <div style="color:#7ec8e3; font-size:1.4em; padding-top:0.15em;">→</div>
+        <div style="text-align:center;">
+          <div style="background:#4caf7d22; border:1px solid #4caf7d; border-radius:6px; padding:0.4em 0.7em; white-space:nowrap;">6 Sources</div>
+        </div>
+
+      </div>
+    </div>
+    <br>
+    <div style="display:flex; gap:1.5em; justify-content:center; font-size:0.6em; color:#a8d8ea;">
+      <span><kbd style="background:#ffffff22; border:1px solid #aaa; border-radius:4px; padding:2px 8px;">← →</kbd> horizontal slides</span>
+      <span><kbd style="background:#ffffff22; border:1px solid #aaa; border-radius:4px; padding:2px 8px;">↑ ↓</kbd> vertical slides</span>
+      <span><kbd style="background:#ffffff22; border:1px solid #aaa; border-radius:4px; padding:2px 8px;">F</kbd> fullscreen</span>
+      <span><kbd style="background:#ffffff22; border:1px solid #aaa; border-radius:4px; padding:2px 8px;">S</kbd> speaker notes</span>
+      <span><kbd style="background:#ffffff22; border:1px solid #aaa; border-radius:4px; padding:2px 8px;">O</kbd> overview</span>
+    </div>
+  </section>
+
+</section><!-- end section 5 -->
+
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 6  ·  SOURCES  (horizontal →)
+════════════════════════════════════════════════ -->
+<section data-background-color="#1a1f2e">
+  <h2>Sources &amp; Links <span class="badge">REFERENCES</span></h2>
+  <ul class="sources">
+    <li>
+      <strong style="color:#a8d8ea;">Reveal.js Official Docs</strong><br>
+      <a href="https://revealjs.com/installation/#basic-setup" target="_blank">https://revealjs.com/installation/#basic-setup</a>
+    </li>
+    <li>
+      <strong style="color:#a8d8ea;">Reveal.js Live Demo</strong><br>
+      <a href="https://revealjs.com/?demo" target="_blank">https://revealjs.com/?demo</a>
+    </li>
+    <li>
+      <strong style="color:#a8d8ea;">Quarto Presentations with Reveal.js</strong><br>
+      <a href="https://quarto.org/docs/presentations/revealjs/" target="_blank">https://quarto.org/docs/presentations/revealjs/</a>
+    </li>
+    <li>
+      <strong style="color:#a8d8ea;">GitHub Pages — Official Documentation</strong><br>
+      <a href="https://docs.github.com/en/pages" target="_blank">https://docs.github.com/en/pages</a>
+    </li>
+    <li>
+      <strong style="color:#a8d8ea;">Jekyll Static Site Generator</strong><br>
+      <a href="https://jekyllrb.com/" target="_blank">https://jekyllrb.com/</a>
+    </li>
+    <li>
+      <strong style="color:#a8d8ea;">My GitHub Pages Website (Assignment 1)</strong><br>
+      <a href="https://soufiane01234.github.io/" target="_blank">https://soufiane01234.github.io/</a>
+    </li>
+    <li>
+      <strong style="color:#a8d8ea;">Source Repository</strong><br>
+      <a href="https://github.com/soufiane01234/soufiane01234.github.io" target="_blank">https://github.com/soufiane01234/soufiane01234.github.io</a>
+    </li>
+  </ul>
+  <div style="text-align:center; margin-top:1.2em; font-size:0.5em; color:#7ec8e355;">
+    Soufiane Soulami · 78134 · 56DPH · Assignment 2
+  </div>
+</section>
+
+
+</div><!-- /slides -->
+</div><!-- /reveal -->
+
+<!-- Reveal.js core -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<!-- Plugins -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+
+<script>
+  Reveal.initialize({
+    // Core options
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+
+    // Navigation — both horizontal AND vertical enabled
+    controls: true,
+    controlsTutorial: true,
+    navigationMode: 'default',   // allows both axes
+    progress: true,
+
+    // View
+    center: false,
+    width: 1100,
+    height: 680,
+    margin: 0.06,
+
+    // Plugins
+    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+  });
+</script>
+</body>
+</html>
